@@ -65,25 +65,7 @@ exports.calc = async (req, res) => {
                 transitDays = transit.transit,
                 deliveryDays = transit.delivery;
             
-            let counter = 0;
-            const possibleDeliveryDay = sendDate;
-
-            switch(sendDate.add(1, 'days').day()) {
-                case 0: // sunday
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6: // saturday
-                    break;                                                                                       
-            }
+           // TODO: CALCULATE PRED. DATES
 
             res.status(200).json({ purchaseDate: sendDate.format("DDMMYYYYTHHmm"), predictableDates: predDates });
 
