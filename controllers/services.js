@@ -1,13 +1,8 @@
 const Module = require('../models/module');
 const Service = require('../models/service');
-const Role = require('../models/role');
+const AdminChecker = require('../utils/adminChecker');
 const mongoose = require('mongoose');
 
-const isAdmin = async (roleId) => {
-    const userRole = await Role.findById(roleId);
-
-    return await userRole.name;
-}
 
 
 /**
@@ -63,9 +58,8 @@ const isAdmin = async (roleId) => {
  */
 
 exports.create = async (req, res) => {
-    const userRole = await isAdmin(req.user.role);
 
-    if( userRole !== "ADMIN" ) {
+    if( await !AdminChecker(req.user.role) ) {
 
         res.status(401).json({ message: "Unauthorized Access" });
 
@@ -155,9 +149,8 @@ exports.create = async (req, res) => {
  */
 
 exports.update = async (req, res) => {
-    const userRole = await isAdmin(req.user.role);
 
-    if( userRole !== "ADMIN" ) {
+    if( await !AdminChecker(req.user.role) ) {
         res.status(401).json({ message: "Unauthorized Access" });
     } else {
         
@@ -173,9 +166,8 @@ exports.update = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    const userRole = await isAdmin(req.user.role);
-
-    if( userRole !== "ADMIN" ) {
+    
+    if( await !AdminChecker(req.user.role) ) {
         res.status(401).json({ message: "Unauthorized Access" });
     } else {
         

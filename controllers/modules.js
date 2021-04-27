@@ -2,13 +2,9 @@ const moment = require('moment');
 
 const Module = require('../models/module');
 const Service = require('../models/service');
-const Role = require('../models/role');
+const AdminChecker = require('../utils/adminChecker');
 
-const isAdmin = async (roleId) => {
-    const userRole = await Role.findById(roleId);
 
-    return await userRole.name;
-}
 
 exports.calc = async (req, res) => {
 
@@ -94,9 +90,9 @@ exports.calc = async (req, res) => {
 }
 
 exports.create = async (req, res) => {
-    const userRole = await isAdmin(req.user.role);
+    
 
-    if( userRole !== "ADMIN" ) {
+    if( await !AdminChecker(req.user.role) ) {
 
         res.status(401).json({ message: "Unauthorized Access" });
 
@@ -136,30 +132,36 @@ exports.create = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const userRole = await isAdmin(req.user.role);
 
-    console.log(`UPDATE ATTEMPT: MODULE #${req.params.id}, USER ROLE: ${userRole}`);
-
-    if( userRole !== "ADMIN" ) {
-        console.log("DANIED");
+    if( await !AdminChecker(req.user.role) ) {
         res.status(401).json({ message: "Unauthorized Access" });
     } else {
-        console.log("DELETED");
-        res.status(200).json({ message: `Module #${req.params.id} has been deleted by ${userRole}: ${req.user.username}` });
+        
+        try {
+            const data = req.body;
+
+            const module = await Module.updateOne({ _id: data.moduleId }, { $set: data.module });
+            res.status(200).json({ success: true, data: module});
+        } catch (err) {
+            res.status(400).json({success: false, message: err.message});
+        }
     }
 }
 
 exports.delete = async (req, res) => {
-    const userRole = await isAdmin(req.user.role);
 
-    console.log(`DELETE ATTEMPT: MODULE #${req.params.id}, USER ROLE: ${userRole}`);
-
-    if( userRole !== "ADMIN" ) {
-        console.log("DANIED");
+    if( await !AdminChecker(req.user.role) ) {
         res.status(401).json({ message: "Unauthorized Access" });
     } else {
-        console.log("DELETED");
-        res.status(200).json({ message: `Module #${req.params.id} has been deleted by ${userRole}: ${req.user.username}` });
+        
+        try {
+            const module = await Module.findByIdAndDelete(req.params.id);
+
+            res.status(200).json({ success: true });
+       } catch(err) {
+            res.status(400).json({success: false, message: err.message});
+       }
+
     }
 
 }
