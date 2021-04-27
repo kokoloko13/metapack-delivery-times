@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "60854f1054bf0c382cbdc5bd"
+  },
+  "username": "admin@test.pl",
+  "password": "$2b$10$YafA3Wi9P0vYRFwo0hNNKuA772J/5631gBTzXnrtTvwcq3aIwKYTS",
+  "role": {
+    "$oid": "60854ab6e2a34f5bd04b90dd"
+  }
+},{
+  "_id": {
+    "$oid": "60854f1054bf0c382cbdc5bc"
+  },
+  "username": "test2@test.pl",
+  "password": "$2b$10$iUDVOy8a8/czXqWGfc6.1uOjCNMKGw/Lm7NxJEAEGCMIV0vXJBnGS",
+  "role": {
+    "$oid": "60854ab6e2a34f5bd04b90dc"
+  }
+},{
+  "_id": {
+    "$oid": "60854f1054bf0c382cbdc5bb"
+  },
+  "username": "test1@test.pl",
+  "password": "$2b$10$.fVWK1SbkxstzD8wQYCazO5LGAQCwGJQeWtiDpiiogh6ndMlX7GIy",
+  "role": {
+    "$oid": "60854ab6e2a34f5bd04b90dc"
+  }
+},{
+  "_id": {
+    "$oid": "60854f1054bf0c382cbdc5be"
+  },
+  "username": "test3@test.pl",
+  "password": "$2b$10$t3RsFuRs9siw2rDOCbI6wes9QHpvntBlZl6woF9EXdXcHK9P/tAu6",
+  "role": {
+    "$oid": "60854ab6e2a34f5bd04b90dc"
+  }
+}]
