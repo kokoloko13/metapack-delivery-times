@@ -17,24 +17,11 @@ const { MONGO_DB_KEY } = process.env;
 
 const MongoURI = `mongodb://127.0.0.1/delivery-time?retryWrites=true&w=majority`;
 
-// api:${MONGO_DB_KEY}@
-// 
-
-// async function getUserRole() {
-//     const userRole = await Role.findOne({ name: "USER" });
-
-//     for(let i=1; i < 5; i++){
-//         const devUser = new User({ username: `test${i}@test.pl`, password: "test123", role: userRole._id });
-//         devUser.save();
-//     }
-// }
-
-// getUserRole();
-
 mongoose.connect(MongoURI, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 })
     .then( res => console.log(`Database connected!`));
 

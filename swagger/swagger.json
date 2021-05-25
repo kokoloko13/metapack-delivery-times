@@ -1,0 +1,319 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Delivery Time App API docs",
+    "description": "Delivery Time App API docs",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Create account",
+        "description": "By calling this endpoint, you can add new account into the system\n",
+        "operationId": "createAccount",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "pass account username",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "pass account password",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Account created"
+          },
+          "400": {
+            "description": "Error."
+          }
+        }
+      }
+    },
+    "/{userId}/admin/{boolFlag}": {
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Toggle ADMIN",
+        "description": "By calling this endpoint, you can toggle admin privileges on account\n",
+        "operationId": "toggleAdmin",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "pass an id of user",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "boolFlag",
+            "in": "path",
+            "required": true,
+            "style": "simple",
+            "explode": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated."
+          },
+          "400": {
+            "description": "Error."
+          }
+        }
+      }
+    },
+    "/authorize": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Authorize - get JWT token",
+        "description": "By calling this endpoint, you can login to get JWT token\n",
+        "operationId": "authorize",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "pass account username",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "pass account password",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JTW Token"
+          },
+          "400": {
+            "description": "Error."
+          }
+        }
+      }
+    },
+    "/{moduleCode}/transitTimes": {
+      "get": {
+        "tags": [
+          "Pred. Times"
+        ],
+        "summary": "get delivery pred. times",
+        "description": "By calling this endpoint, you can get delivery pred. times\n",
+        "operationId": "predTimes",
+        "parameters": [
+          {
+            "name": "moduleCode",
+            "in": "path",
+            "description": "pass a moduleCode",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "serviceName",
+            "in": "query",
+            "description": "pass service name",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "purchaseDate",
+            "in": "query",
+            "description": "pass purchasedate (DDMMYYYYTHHmm)",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromCountry",
+            "in": "query",
+            "description": "pass from country symbol",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "toCountry",
+            "in": "query",
+            "description": "pass to country symbol",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response - pred. times."
+          },
+          "400": {
+            "description": "Error."
+          }
+        }
+      }
+    },
+    "/modules": {
+      "post": {
+        "tags": [
+          "Modules"
+        ],
+        "summary": "Add module",
+        "description": "By calling this endpoint, you can add module.\n",
+        "operationId": "addModule",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "pass module code",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "services",
+            "in": "query",
+            "description": "pass array of services",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {}
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Module"
+          },
+          "400": {
+            "description": "Error."
+          }
+        }
+      }
+    },
+    "/modules/{id}": {
+      "put": {
+        "tags": [
+          "Modules"
+        ],
+        "summary": "Edit module",
+        "description": "By calling this endpoint, you can edit module\n",
+        "operationId": "editModule",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "pass an id of module",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Module updated."
+          },
+          "400": {
+            "description": "Error."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Modules"
+        ],
+        "summary": "Delete module",
+        "description": "By calling this endpoint, you can delete module\n",
+        "operationId": "deleteModule",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "pass an id of module",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Module deleted."
+          },
+          "400": {
+            "description": "Error."
+          }
+        }
+      }
+    }
+  },
+  "components": {}
+}

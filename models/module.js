@@ -1,3 +1,4 @@
+const Service = require('./service');
 const mongoose = require('mongoose');
 
 const moduleSchema = new mongoose.Schema({
@@ -22,5 +23,13 @@ const moduleSchema = new mongoose.Schema({
         }
     }  
 });
+
+moduleSchema.pre('deleteOne', { document: true }, async function (next) {
+    this.services.forEach( async service => {
+        const delService = await Service.findById(service);
+        if(delService !== null) await delService.deleteOne();
+    });
+    next();
+  });
 
 module.exports = mongoose.model('Module', moduleSchema);
